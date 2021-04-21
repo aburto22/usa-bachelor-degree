@@ -91,7 +91,7 @@ Promise.all([fetchTopo, fetchBac])
         const data = [
           `State: ${self.attr("data-state")}`,
           `County: ${self.attr("data-county")}`,
-          `Precentage: ${self.attr("data-education")}`,
+          `Bachelors: ${self.attr("data-education")}%`,
         ];
 
         self.attr("fill", "white");
@@ -108,12 +108,12 @@ Promise.all([fetchTopo, fetchBac])
           .data(data)
           .enter()
           .append("text")
-          .text((d) => d)
+          .text((val) => val)
           .attr("x", 10)
-          .attr("y", (d, i) => 22 + i * 17);
+          .attr("y", (val, i) => 22 + i * 17);
       })
       .on("mouseout", (e, d) => {
-        d3.select(e.target).attr("fill", function (d) {
+        d3.select(e.target).attr("fill", function () {
           return getColor(this);
         });
         tooltip
