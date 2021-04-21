@@ -1,0 +1,42 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 13px;
+}
+
+html {
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background: radial-gradient(farthest-corner at 50% 60%, #c8c8c8 20%, #f0f0f0);
+  background-attachment: fixed;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#container {
+  padding: 2rem;
+}
+#container svg {
+  max-width: 100%;
+}
+#container h1 {
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 3rem;
+}
+#container h2 {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+/*# sourceMappingURL=style.css.map */
