@@ -1,8 +1,7 @@
 const w = 1300;
-const h = 575;
+const h = 565;
 const paddingX = 150;
 const paddingTop = 25;
-const paddingBottom = 75;
 
 d3.select("#root").append("div").attr("id", "container");
 
