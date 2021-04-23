@@ -1,7 +1,8 @@
 const w = 1300;
 const h = 575;
 const paddingX = 150;
-const paddingY = 75;
+const paddingTop = 25;
+const paddingBottom = 75;
 
 d3.select("#root").append("div").attr("id", "container");
 
@@ -41,7 +42,7 @@ Promise.all([fetchTopo, fetchBac])
     const colorScale = d3
       .scaleLinear()
       .domain([minBac, maxBac])
-      .range(["#233555", "#ccd9f0"]);
+      .range(["#233555", "white"]);
 
     const colorData = Array(5)
       .fill(1)
@@ -61,7 +62,7 @@ Promise.all([fetchTopo, fetchBac])
     svg
       .append("g")
       .attr("id", "graph")
-      .attr("transform", `translate(${paddingX}, ${paddingY})`)
+      .attr("transform", `translate(${paddingX}, ${paddingTop})`)
       .append("g")
       .selectAll("path")
       .data(topojson.feature(dataTopo, dataTopo.objects.counties).features)
@@ -85,10 +86,8 @@ Promise.all([fetchTopo, fetchBac])
         return getColor(this);
       })
       .on("mouseover", (e, d) => {
-        const mouse = d3.pointer(e);
-
         const self = d3.select(e.target);
-        const data = [
+        const localData = [
           `State: ${self.attr("data-state")}`,
           `County: ${self.attr("data-county")}`,
           `Bachelors: ${self.attr("data-education")}%`,
@@ -97,20 +96,25 @@ Promise.all([fetchTopo, fetchBac])
         self.attr("fill", "white");
 
         tooltip
-          .attr(
-            "transform",
-            `translate(${mouse[0] - 80 + paddingX}, ${
-              mouse[1] - 85 + paddingY
-            })`
-          )
           .style("display", "block")
           .selectAll("text")
-          .data(data)
+          .data(localData)
           .enter()
           .append("text")
           .text((val) => val)
+          .attr("id", (d, i) => "tooltip-" + i)
           .attr("x", 10)
           .attr("y", (val, i) => 22 + i * 17);
+
+        const tooltipTextWidth = d3.max(
+          localData.map((val, i) =>
+            Math.ceil(
+              Number(document.querySelector("#tooltip-" + i).getBBox().width)
+            )
+          )
+        );
+
+        tooltip.select("rect").attr("width", tooltipTextWidth + 25);
       })
       .on("mouseout", (e, d) => {
         d3.select(e.target).attr("fill", function () {
@@ -184,9 +188,18 @@ Promise.all([fetchTopo, fetchBac])
       .append("rect")
       .attr("width", 275)
       .attr("height", 70)
-      .attr("fill", "white")
+      .attr("fill", "rgba(255, 255, 255, 0.9)")
       .attr("rx", 5)
       .attr("ry", 5)
       .attr("stroke", "#dde6f5");
+
+    svg.on("mousemove", (e) => {
+      const mouse = d3.pointer(e);
+
+      tooltip.attr(
+        "transform",
+        `translate(${mouse[0] + 20}, ${mouse[1] - 20})`
+      );
+    });
   })
   .catch((err) => console.warn(err));
