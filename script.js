@@ -3,17 +3,8 @@ const h = 565;
 const paddingX = 150;
 const paddingTop = 25;
 
-d3.select("#root").append("div").attr("id", "container");
-
-d3.select("#container").append("h1").attr("id", "title").text("USA Study");
-
-d3.select("#container")
-  .append("h2")
-  .attr("id", "description")
-  .text("Precentage of adults with a bachelor degree per county");
-
 const svg = d3
-  .select("#container")
+  .select("main")
   .append("svg")
   .attr("width", w)
   .attr("height", h)
