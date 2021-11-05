@@ -15,6 +15,9 @@ html {
 body {
   background: radial-gradient(farthest-corner at 50% 60%, #c8c8c8 20%, #f0f0f0);
   background-attachment: fixed;
+}
+
+#container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
